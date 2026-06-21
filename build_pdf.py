@@ -403,6 +403,46 @@ def render_qa(c, s):
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), s["path"])
     draw_image_fit(c, path, W * 0.52, H * 0.10, W * 0.42, H * 0.80)
 
+def render_image_bullets(c, s):
+    paint_bg(c)
+    # left: image
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), s["path"])
+    draw_image_fit(c, path, W * 0.04, H * 0.13, W * 0.46, H * 0.74, shadow=True)
+    # right: bullet list (two marker styles)
+    items = s["bullets"]
+    rx = W * 0.555
+    maxw = W * 0.40
+    size = s.get("size", 23)
+    while size > 14:
+        set_font(c, size, bold=False)
+        line_h = size * 1.32
+        gap = size * 0.62
+        blocks = []
+        for kind, txt in items:
+            indent = size * 1.1 if kind == "dash" else size * 1.1
+            blocks.append(wrap(c, txt, maxw - indent))
+        total = sum(len(b) * line_h for b in blocks) + gap * (len(items) - 1)
+        if total <= H * 0.82:
+            break
+        size -= 1
+    y = (H - total) / 2 + size
+    for (kind, txt), lines in zip(items, blocks):
+        my = y - size * 0.32
+        if kind == "star":
+            c.set_source_rgb(*rgb(ACCENT))
+            c.rectangle(rx, my, size * 0.34, size * 0.34); c.fill()
+            tx = rx + size * 1.1
+        else:  # dash sub-item
+            c.set_source_rgba(*rgb(ACCENT), 0.65)
+            c.rectangle(rx + size * 0.9, my + size * 0.12, size * 0.42, size * 0.10); c.fill()
+            tx = rx + size * 1.1 + size * 0.9
+        col = INK if kind == "star" else INK_SOFT
+        set_font(c, size, bold=False)
+        for ln in lines:
+            draw_text(c, ln, tx, y, col, align="left")
+            y += line_h
+        y += gap
+
 def render_caption_image(c, s):
     paint_bg(c)
     size = s.get("size", 60)
@@ -472,7 +512,8 @@ RENDERERS = {"title": render_title, "content": render_content,
              "single_image": render_single_image,
              "paragraph": render_center_paragraph,
              "caption_image": render_caption_image,
-             "qa": render_qa}
+             "qa": render_qa,
+             "image_bullets": render_image_bullets}
 
 # ---------- slide deck (mirror of index.html) ----------
 SLIDES = [
@@ -521,7 +562,19 @@ SLIDES = [
     {"type": "two_lines", "top": "그래서, 딥리서치", "top_highlight": "딥리서치",
      "bottom": "[Curiosity]", "bottom_color": "clay",
      "top_size": 64, "bottom_size": 44, "top_y": 0.48, "bottom_y": 0.61},
-    {"type": "single_image", "path": "slide 20/slide20_still.png"},
+    {"type": "image_bullets", "path": "slide 20/slide20_still.png",
+     "bullets": [
+        ("star", "HBM vs GDDR vs LPDDR"),
+        ("star", "PCIe vs UCIe vs BoW"),
+        ("dash", "Mac Mini의 메모리 구조와 LLM 추론 성능 한계 분석"),
+        ("dash", "DGX SPARK vs Apple Mac 메모리 아키텍처 비교"),
+        ("star", "NVIDIA vs AMD GPU 아키텍처"),
+        ("star", "Groq의 SRAM 기반 아키텍처가 NVIDIA 보다 10배 빠른 이유"),
+        ("star", "퓨리오사 & 리벨리온 NPU 아키텍처"),
+        ("star", "vLLM vs SGLang - 서빙 방식 및 attention 구현체의 복잡도 분석"),
+        ("star", "Systolic array 기반의 dense transformer 연산 방법론 분석"),
+        ("dash", "FPGA 공부 로드맵"),
+     ]},
     {"type": "qa", "title": "Q&A", "subtitle": "감사합니다 · 슬램슬램",
      "title_size": 96,
      "path": "slide 21/726294972_17971381512115292_8465929942780449733_n.jpg"},
