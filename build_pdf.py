@@ -392,6 +392,17 @@ def render_single_image(c, s):
     path = os.path.join(os.path.dirname(os.path.abspath(__file__)), s["path"])
     draw_image_fit(c, path, W * 0.04, H * 0.05, W * 0.92, H * 0.90)
 
+def render_qa(c, s):
+    paint_bg(c)
+    lx = W * 0.27           # centre of left text column
+    set_font(c, s.get("title_size", 112), bold=True)
+    draw_text(c, s["title"], lx, H * 0.49, INK, align="center")
+    if s.get("subtitle"):
+        set_font(c, 30, bold=True)
+        draw_text(c, s["subtitle"], lx, H * 0.61, ACCENT, align="center")
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), s["path"])
+    draw_image_fit(c, path, W * 0.52, H * 0.10, W * 0.42, H * 0.80)
+
 def render_caption_image(c, s):
     paint_bg(c)
     size = s.get("size", 60)
@@ -460,7 +471,8 @@ RENDERERS = {"title": render_title, "content": render_content,
              "equation": render_equation,
              "single_image": render_single_image,
              "paragraph": render_center_paragraph,
-             "caption_image": render_caption_image}
+             "caption_image": render_caption_image,
+             "qa": render_qa}
 
 # ---------- slide deck (mirror of index.html) ----------
 SLIDES = [
@@ -510,6 +522,9 @@ SLIDES = [
      "bottom": "[Curiosity]", "bottom_color": "clay",
      "top_size": 64, "bottom_size": 44, "top_y": 0.48, "bottom_y": 0.61},
     {"type": "single_image", "path": "slide 20/slide20_still.png"},
+    {"type": "qa", "title": "Q&A", "subtitle": "감사합니다 · 슬램슬램",
+     "title_size": 96,
+     "path": "slide 21/726294972_17971381512115292_8465929942780449733_n.jpg"},
 ]
 
 def main():
