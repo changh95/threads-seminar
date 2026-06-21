@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 툴 중에 가장 좋은건 ______이다</title>
+
+  <!-- Tailwind CSS (Play CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- reveal.js core -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+
+  <!-- Fonts: Anthropic-style sans. Styrene/Tiempos are licensed & not web-hostable,
+       so we lead with their names (used if installed locally) and fall back to
+       Noto Sans KR — a clean, Korean-supporting match. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ivory-base: #F6F1E7;   /* warm ivory */
+      --ivory-light: #FBF8F0;  /* highlight */
+      --ivory-deep: #ECE4D4;   /* shadow */
+      --ink: #2B2723;          /* near-black warm ink */
+      --ink-soft: #6B6358;     /* muted body text */
+      --accent: #CC785C;       /* Anthropic clay */
+      --font-sans: "Styrene B", "Styrene A", "Noto Sans KR", "Inter", system-ui, -apple-system, sans-serif;
+    }
+
+    html, body { background: var(--ivory-base); }
+
+    /* Overall font: one consistent Anthropic-style sans everywhere */
+    .reveal { font-family: var(--font-sans); color: var(--ink); -webkit-font-smoothing: antialiased; }
+    .reveal h1, .reveal h2, .reveal h3 { font-family: var(--font-sans); color: var(--ink); font-weight: 700; letter-spacing: -0.02em; }
+
+    /* ---- Ivory matte texture background ---- */
+    .reveal-viewport {
+      background-color: var(--ivory-base);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E"),
+        radial-gradient(120% 120% at 50% 30%, var(--ivory-light) 0%, var(--ivory-base) 45%, var(--ivory-deep) 100%);
+      background-size: 180px 180px, cover;
+      background-repeat: repeat, no-repeat;
+    }
+
+    .reveal .slides section { background: transparent; }
+
+    .slide-surface { position: relative; }
+    .slide-surface::after {
+      content: "";
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.10'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+      opacity: 0.5;
+    }
+
+    .accent-rule { width: 64px; height: 3px; background: var(--accent); border-radius: 2px; }
+
+    /* Fill-in-the-blank underline */
+    .blank {
+      display: inline-block;
+      width: 2.4em;
+      border-bottom: 6px solid var(--accent);
+      transform: translateY(-0.12em);
+      margin: 0 0.12em;
+    }
+
+    /* Heartbeat pulse for slide 10 (Model, then Harness) */
+    .beat { display: inline-block; color: var(--accent); transform-origin: center; }
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      8%  { transform: scale(1.22); }
+      16% { transform: scale(1); }
+      24% { transform: scale(1.12); }
+      32% { transform: scale(1); }
+    }
+    .beat-model   { animation: heartbeat 2.4s ease-in-out infinite; }
+    .beat-harness { animation: heartbeat 2.4s ease-in-out infinite; animation-delay: 1.2s; }
+
+    @media print {
+      .reveal-viewport, .reveal .slides section { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- ============ TITLE SLIDE ============ -->
+      <section class="slide-surface" data-state="title">
+        <div class="flex flex-col items-center justify-center h-full text-center px-16">
+          <h1 class="mb-12 whitespace-nowrap" style="font-size: 3rem; font-weight: 900;">
+            AI 툴 중에 가장 좋은건 <span class="blank"></span> 이다
+          </h1>
+          <p class="text-2xl mt-4" style="color: var(--ink);">
+            <span style="color: var(--ink-soft);">발표</span>&nbsp;&nbsp;슬램슬램
+          </p>
+          <p class="mt-3 text-lg tracking-wide" style="color: var(--accent);">2026.06.21</p>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 2 — bullets (left) + profile (right) ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-between h-full pl-20 pr-16 gap-10">
+          <ul class="space-y-6 text-left list-none shrink-0" style="flex-basis: 42%;">
+            <li class="flex items-center" style="font-size: 1.9rem; color: var(--ink);">
+              <span class="inline-block mr-4" style="width: 0.42em; height: 0.42em; background: var(--accent);"></span>로컬 LLM
+            </li>
+            <li class="flex items-center" style="font-size: 1.9rem; color: var(--ink);">
+              <span class="inline-block mr-4" style="width: 0.42em; height: 0.42em; background: var(--accent);"></span>피지컬 AI
+            </li>
+            <li class="flex items-center" style="font-size: 1.9rem; color: var(--ink);">
+              <span class="inline-block mr-4" style="width: 0.42em; height: 0.42em; background: var(--accent);"></span>AI 반도체
+            </li>
+            <li class="flex items-center" style="font-size: 1.9rem; color: var(--ink);">
+              <span class="inline-block mr-4" style="width: 0.42em; height: 0.42em; background: var(--accent);"></span>로보틱스 & SLAM
+            </li>
+            <li class="flex items-center" style="font-size: 1.9rem; color: var(--ink);">
+              <span class="inline-block mr-4" style="width: 0.42em; height: 0.42em; background: var(--accent);"></span>컴퓨터 비전 AI
+            </li>
+          </ul>
+          <div class="grow flex justify-center">
+            <img src="slide2/right_profile.png" alt="슬램슬램 프로필"
+                 class="rounded-xl"
+                 style="max-width: 100%; max-height: 78%; box-shadow: 0 10px 30px rgba(0,0,0,0.12);">
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 3 — scatter collage ============ -->
+      <section class="slide-surface">
+        <div id="scatter3" class="relative w-full h-full"></div>
+      </section>
+
+      <!-- ============ SLIDE 4 — two images ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center gap-12 h-full px-16">
+          <img src="slide4/left_jim_keller.webp" alt="Jim Keller"
+               class="rounded-xl object-contain"
+               style="max-width: 40%; max-height: 66%; box-shadow: 0 12px 32px rgba(0,0,0,0.16);">
+          <img src="slide4/right_tenstorrent.jpg" alt="Tenstorrent"
+               class="rounded-xl object-contain"
+               style="max-width: 40%; max-height: 66%; box-shadow: 0 12px 32px rgba(0,0,0,0.16);">
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 5 — centered statement (blank) ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full text-center px-16">
+          <h2 class="whitespace-nowrap" style="font-size: 3rem; font-weight: 900;">
+            AI 툴 중에 가장 좋은건 <span class="blank"></span> 이다
+          </h2>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 6 — answer + two images ============ -->
+      <section class="slide-surface">
+        <div class="flex flex-col items-center justify-center h-full px-16 gap-10">
+          <h2 class="whitespace-nowrap" style="font-size: 3rem; font-weight: 900;">
+            AI 툴 중에 가장 좋은건 <span style="color: var(--accent);">딥리서치</span>다
+          </h2>
+          <div class="flex items-center justify-center gap-10 w-full" style="height: 56%;">
+            <img src="slide6/chatgpt_deep_research.png" alt="ChatGPT Deep Research"
+                 class="rounded-xl object-contain"
+                 style="max-width: 46%; max-height: 100%; box-shadow: 0 10px 28px rgba(0,0,0,0.15);">
+            <img src="slide6/claude_deep_research.png" alt="Claude Deep Research"
+                 class="rounded-xl object-contain"
+                 style="max-width: 46%; max-height: 100%; box-shadow: 0 10px 28px rgba(0,0,0,0.15);">
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 7 — two centered lines ============ -->
+      <section class="slide-surface">
+        <div class="flex flex-col items-center justify-center h-full text-center px-16 gap-4">
+          <h2 style="font-size: 4.25rem; font-weight: 900; color: var(--ink);">Agentic AI</h2>
+          <h2 style="font-size: 4.25rem; font-weight: 900; color: var(--ink);">하네스 엔지니어링</h2>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 8 — 5 workflow GIFs ============ -->
+      <section class="slide-surface">
+        <div class="flex flex-wrap items-center justify-center content-center h-full px-10 gap-x-8 gap-y-3">
+          <img src="slide8/1_prompt_chaining.gif"      alt="Prompt Chaining"        style="width: 31%;">
+          <img src="slide8/2_routing.gif"              alt="Routing"                style="width: 31%;">
+          <img src="slide8/3_parallelization.gif"      alt="Parallelization"        style="width: 31%;">
+          <img src="slide8/4_orchestrator_workers.gif" alt="Orchestrator-Workers"   style="width: 31%;">
+          <img src="slide8/5_evaluator_optimizer.gif"  alt="Evaluator-Optimizer"    style="width: 31%;">
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 9 — 6x ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full text-center">
+          <span style="font-size: 11rem; font-weight: 900; color: var(--accent); letter-spacing: -0.03em;">6x</span>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 10 — Agent = Model + Harness (heartbeat) ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full text-center px-16">
+          <h2 class="whitespace-nowrap" style="font-size: 3.75rem; font-weight: 900; color: var(--ink);">
+            Agent = <span class="beat beat-model">Model</span> + <span class="beat beat-harness">Harness</span>
+          </h2>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 11 — Korean statement ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full text-center px-16">
+          <h2 style="font-size: 4rem; font-weight: 900; color: var(--ink);">피지컬 AI가 아직 어려운 이유</h2>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 12 — screen recording GIF ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full px-12">
+          <img id="slide12gif" alt="Screen recording"
+               class="rounded-xl object-contain"
+               style="max-width: 97%; max-height: 94%; box-shadow: 0 12px 32px rgba(0,0,0,0.16);">
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 13 ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full text-center px-16">
+          <h2 style="font-size: 4rem; font-weight: 900; color: var(--ink);">진짜 문제는 무엇인가?</h2>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 14 — equation (Model) + 방법 1 ============ -->
+      <section class="slide-surface">
+        <div class="flex flex-col items-center justify-center h-full text-center px-16 gap-8">
+          <h2 class="whitespace-nowrap" style="font-size: 3.5rem; font-weight: 900; color: var(--ink);">
+            Agent = <span style="color: var(--accent);">Model</span> + Harness
+          </h2>
+          <p style="font-size: 2.5rem; font-weight: 700; color: var(--ink);">방법 1: 내가 더 좋은 모델이 된다</p>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 15 ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full text-center px-24">
+          <h2 style="font-size: 3.25rem; font-weight: 900; color: var(--ink); max-width: 80%; line-height: 1.4;">
+            문제: 내가 더 똑똑해져야함. 학습 필요
+          </h2>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 16 — equation (Harness) + 방법 2 ============ -->
+      <section class="slide-surface">
+        <div class="flex flex-col items-center justify-center h-full text-center px-16 gap-8">
+          <h2 class="whitespace-nowrap" style="font-size: 3.5rem; font-weight: 900; color: var(--ink);">
+            Agent = Model + <span style="color: var(--accent);">Harness</span>
+          </h2>
+          <p style="font-size: 2.5rem; font-weight: 700; color: var(--ink);">방법 2: 내가 더 좋은 하네스가 된다</p>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 17 ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full text-center px-24">
+          <h2 style="font-size: 3rem; font-weight: 900; color: var(--ink); max-width: 84%; line-height: 1.45;">
+            문제: 내가 풀려고 하는 문제를 정확히 알아야함. 어떤 툴과 워크플로우를 써야하는지 알아야함
+          </h2>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 18 — which method? + infinite loop ============ -->
+      <section class="slide-surface">
+        <div class="flex flex-col items-center justify-center h-full text-center px-16 gap-2">
+          <h2 style="font-size: 3.25rem; font-weight: 900; color: var(--ink);">어떤 방법을 써야하는가?</h2>
+          <img src="slide18/loop.gif" alt="방법 1 ↔ 방법 2 무한 루프"
+               style="width: 58%; max-height: 60%; object-fit: contain;">
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 19 — 그래서, 딥리서치 / [Curiosity] ============ -->
+      <section class="slide-surface">
+        <div class="flex flex-col items-center justify-center h-full text-center px-16 gap-6">
+          <h2 style="font-size: 4rem; font-weight: 900; color: var(--ink);">
+            그래서, <span style="color: var(--accent);">딥리서치</span>
+          </h2>
+          <p style="font-size: 2.75rem; font-weight: 700; color: var(--accent);">[Curiosity]</p>
+        </div>
+      </section>
+
+      <!-- ============ SLIDE 20 — screen recording GIF ============ -->
+      <section class="slide-surface">
+        <div class="flex items-center justify-center h-full w-full px-2">
+          <img id="slide20gif" alt="Screen recording"
+               class="rounded-xl object-contain"
+               style="max-width: 100%; max-height: 100%; box-shadow: 0 12px 32px rgba(0,0,0,0.16);">
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script>
+    // slide 12 & 20 GIF paths (folders contain spaces)
+    document.getElementById("slide12gif").src =
+      "slide 12/recording.gif".replace(/ /g, "%20");
+    document.getElementById("slide20gif").src =
+      "slide 20/recording.gif".replace(/ /g, "%20");
+  </script>
+
+  <!-- Slide 3 non-overlapping scatter (geometry mirrors build_pdf.py) -->
+  <script>
+    (function () {
+      const NBSP = String.fromCharCode(0x202F);  // filenames use a narrow no-break space
+      const times = ["11.02.12","11.04.17","11.04.40","11.04.50","11.04.56",
+                     "11.05.03","11.05.18","11.05.24","11.05.38"];
+      // [centre x, centre y, image width px, rotation deg]  (1280x720 canvas)
+      const cards = [
+        [401.67, 128.66, 249.91, -2],
+        [631.82, 128.66, 158.39,  1.5],
+        [870.15, 128.66, 266.26, -1.5],
+        [360.82, 340.99, 168.20,  2],
+        [557.01, 340.99, 172.19, -1.5],
+        [836.19, 340.99, 334.18,  1.5],
+        [399.41, 572.33, 245.37, -1.5],
+        [670.78, 572.33, 245.37,  2],
+        [911.37, 572.33, 183.81, -1.5],
+      ];
+      const host = document.getElementById("scatter3");
+      cards.forEach(([cx, cy, w, rot], i) => {
+        const file = `Screenshot 2026-06-21 at ${times[i]}${NBSP}AM.png`;
+        const card = document.createElement("div");
+        card.style.cssText =
+          `position:absolute;left:${cx}px;top:${cy}px;` +
+          `transform:translate(-50%,-50%) rotate(${rot}deg);background:#fff;` +
+          `padding:7px;border:1px solid rgba(0,0,0,0.12);` +
+          `box-shadow:0 10px 26px rgba(0,0,0,0.20);`;
+        const img = document.createElement("img");
+        img.src = "slide3/" + encodeURIComponent(file);
+        img.style.cssText = `display:block;width:${w}px;height:auto;`;
+        card.appendChild(img);
+        host.appendChild(card);
+      });
+    })();
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280, height: 720, margin: 0.04,
+      hash: true, slideNumber: 'c/t', transition: 'fade',
+      controls: true, progress: true,
+    });
+  </script>
+</body>
+</html>
